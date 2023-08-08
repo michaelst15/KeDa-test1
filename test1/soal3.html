@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sum of Even Numbers in Nested Object</title>
+</head>
+<body>
+  <h1>Sum of Even Numbers in Nested Object</h1>
+  <p>Enter a nested object with numbers and calculate the sum of all even numbers:</p>
+  <textarea id="inputObject" rows="10" cols="40" placeholder="Enter a nested object..."></textarea>
+  <button onclick="calculateSum()">Calculate Sum</button>
+  <p>Sum of Even Numbers: <span id="evenSum"></span></p>
+
+  <script>
+    function isNumber(value) {
+      return typeof value === 'number' && !isNaN(value);
+    }
+
+    function sumEvenNumbers(obj) {
+      let sum = 0;
+
+      for (const key in obj) {
+        if (isNumber(obj[key]) && obj[key] % 2 === 0) {
+          sum += obj[key];
+        } else if (typeof obj[key] === 'object') {
+          sum += sumEvenNumbers(obj[key]);
+        }
+      }
+
+      return sum;
+    }
+
+    function calculateSum() {
+      const inputObjectElement = document.getElementById('inputObject');
+      const evenSumElement = document.getElementById('evenSum');
+
+      try {
+        const inputObject = JSON.parse(inputObjectElement.value);
+
+        if (typeof inputObject === 'object') {
+          const sum = sumEvenNumbers(inputObject);
+          evenSumElement.textContent = sum;
+        } else {
+          evenSumElement.textContent = 'Invalid JSON format';
+        }
+      } catch (error) {
+        evenSumElement.textContent = 'Invalid JSON format';
+      }
+    }
+  </script>
+</body>
+</html>

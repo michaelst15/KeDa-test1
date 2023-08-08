@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Manual Sorting</title>
+</head>
+<body>
+  <h1>Manual Sorting</h1>
+  <p>Enter numbers (comma-separated) and click the button to sort them in descending order:</p>
+  <input type="text" id="inputNumbers" placeholder="Enter numbers...">
+  <button onclick="sortNumbers()">Sort</button>
+  <p>Sorted Array: <span id="sortedArray"></span></p>
+
+  <script>
+    function manualSortDescending(arr) {
+      const n = arr.length;
+
+      for (let i = 0; i < n - 1; i++) {
+        for (let j = 0; j < n - i - 1; j++) {
+          if (arr[j] < arr[j + 1]) {
+            const temp = arr[j];
+            arr[j] = arr[j + 1];
+            arr[j + 1] = temp;
+          }
+        }
+      }
+
+      return arr;
+    }
+
+    function sortNumbers() {
+      const inputNumbersElement = document.getElementById('inputNumbers');
+      const sortedArrayElement = document.getElementById('sortedArray');
+
+      const inputNumbers = inputNumbersElement.value.split(',').map(Number);
+
+      const sortedNumbers = manualSortDescending([...inputNumbers]);
+      sortedArrayElement.textContent = sortedNumbers.join(', ');
+    }
+  </script>
+</body>
+</html>

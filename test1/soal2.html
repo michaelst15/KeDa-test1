@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Maximum Subarray Sum</title>
+</head>
+<body>
+  <h1>Maximum Subarray Sum</h1>
+  <p>Enter numbers (comma-separated) and specify the subarray length to find the maximum subarray sum:</p>
+  <input type="text" id="inputNumbers" placeholder="Enter numbers...">
+  <input type="number" id="subarrayLength" placeholder="Subarray length">
+  <button onclick="findMaxSubarraySum()">Find Maximum Subarray Sum</button>
+  <p>Maximum Subarray Sum: <span id="maxSubarraySum"></span></p>
+
+  <script>
+    function findMaxSubarraySum() {
+      const inputNumbersElement = document.getElementById('inputNumbers');
+      const subarrayLengthElement = document.getElementById('subarrayLength');
+      const maxSubarraySumElement = document.getElementById('maxSubarraySum');
+
+      const inputNumbers = inputNumbersElement.value.split(',').map(Number);
+      const subarrayLength = parseInt(subarrayLengthElement.value, 10);
+
+      if (inputNumbers.length < subarrayLength) {
+        maxSubarraySumElement.textContent = 'Array length is less than subarray length';
+        return;
+      }
+
+      let maxSum = 0;
+      let tempSum = 0;
+
+      for (let i = 0; i < subarrayLength; i++) {
+        maxSum += inputNumbers[i];
+      }
+
+      tempSum = maxSum;
+
+      for (let i = subarrayLength; i < inputNumbers.length; i++) {
+        tempSum = tempSum - inputNumbers[i - subarrayLength] + inputNumbers[i];
+        maxSum = Math.max(maxSum, tempSum);
+      }
+
+      maxSubarraySumElement.textContent = maxSum;
+    }
+  </script>
+</body>
+</html>
